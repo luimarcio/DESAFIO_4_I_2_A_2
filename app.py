@@ -43,7 +43,12 @@ st.caption("Suba um .zip com os CSVs e pergunte em português. "
 # --- Chave de API: pega dos secrets (recomendado) ou de um campo na barra lateral.
 with st.sidebar:
     st.header("Configuração")
-    chave_secrets = st.secrets.get("GOOGLE_API_KEY", "") if hasattr(st, "secrets") else ""
+    # Tenta ler a chave dos secrets. Se nao houver secrets configurados
+    # (ex.: antes da Parte 3), nao quebra: cai para o campo manual.
+    try:
+        chave_secrets = st.secrets.get("GOOGLE_API_KEY", "")
+    except Exception:  # noqa: BLE001
+        chave_secrets = ""
     api_key = chave_secrets or st.text_input("Chave da API do Google (Gemini)",
                                               type="password")
     st.markdown("Crie uma chave gratuita no **Google AI Studio**.")
