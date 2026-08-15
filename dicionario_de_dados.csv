@@ -1,0 +1,31 @@
+arquivo,coluna,descricao
+cabecalho,CHAVE DE ACESSO,Codigo unico de 44 digitos que identifica a nota fiscal
+cabecalho,MODELO,Modelo do documento fiscal (ex.: 55 = NF-e)
+cabecalho,SERIE,Serie da nota fiscal
+cabecalho,NUMERO,Numero sequencial da nota fiscal
+cabecalho,NATUREZA DA OPERACAO,Descricao da operacao (ex.: venda, remessa)
+cabecalho,DATA EMISSAO,Data em que a nota foi emitida
+cabecalho,EVENTO MAIS RECENTE,Ultimo evento registrado para a nota
+cabecalho,DATA/HORA EVENTO MAIS RECENTE,Data e hora do ultimo evento
+cabecalho,CPF/CNPJ Emitente,Documento de quem emitiu a nota (fornecedor)
+cabecalho,RAZAO SOCIAL EMITENTE,Nome/razao social do emitente (fornecedor)
+cabecalho,INSCRICAO ESTADUAL EMITENTE,Inscricao estadual do emitente
+cabecalho,UF EMITENTE,Estado (UF) do emitente
+cabecalho,MUNICIPIO EMITENTE,Municipio do emitente
+cabecalho,CNPJ DESTINATARIO,CNPJ de quem recebeu a nota (destinatario)
+cabecalho,NOME DESTINATARIO,Nome do destinatario
+cabecalho,UF DESTINATARIO,Estado (UF) do destinatario
+cabecalho,INDICADOR IE DESTINATARIO,Indicador de inscricao estadual do destinatario
+cabecalho,DESTINO DA OPERACAO,Se a operacao e interna, interestadual ou exterior
+cabecalho,CONSUMIDOR FINAL,Indica se e venda a consumidor final
+cabecalho,PRESENCA DO COMPRADOR,Forma de presenca do comprador na operacao
+cabecalho,VALOR NOTA FISCAL,Valor total da nota fiscal em reais
+itens,NUMERO PRODUTO,Numero sequencial do item dentro da nota
+itens,DESCRICAO DO PRODUTO/SERVICO,Descricao do produto ou servico do item
+itens,CODIGO NCM/SH,Codigo NCM/SH de classificacao do produto
+itens,NCM/SH (TIPO DE PRODUTO),Descricao do tipo de produto conforme NCM/SH
+itens,CFOP,Codigo Fiscal de Operacoes e Prestacoes
+itens,QUANTIDADE,Quantidade comprada do item
+itens,UNIDADE,Unidade de medida do item (ex.: UN, KG)
+itens,VALOR UNITARIO,Valor unitario do item em reais
+itens,VALOR TOTAL,Valor total do item (quantidade x valor unitario)
