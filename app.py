@@ -22,7 +22,7 @@ import streamlit as st
 
 import data_utils as du
 from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 
 # StreamlitCallbackHandler mostra o "raciocinio" do agente ao vivo.
 # O caminho de import mudou entre versoes; tentamos os dois.
@@ -31,10 +31,9 @@ try:
 except Exception:  # noqa: BLE001
     from langchain.callbacks import StreamlitCallbackHandler
 
-# Modelo padrao do Gemini. Fica editavel na barra lateral do app, entao se o
-# Google aposentar este nome, basta digitar outro na tela (ex.: "gemini-3.7-flash")
-# sem alterar o codigo nem republicar.
-MODELO_LLM = "gemini-3.6-flash"
+# Modelo padrao (Groq). Fica editavel na barra lateral do app, entao se o
+# provedor aposentar este nome, basta digitar outro na tela sem mexer no codigo.
+MODELO_LLM = "llama-3.3-70b-versatile"
 
 st.set_page_config(page_title="Consulta de NFs com IA", page_icon="📄", layout="wide")
 st.title("📄 Consulta Inteligente de Notas Fiscais (CSV)")
@@ -45,16 +44,17 @@ st.caption("Suba um .zip com os CSVs e pergunte em português. "
 with st.sidebar:
     st.header("Configuração")
     # Tenta ler a chave dos secrets. Se nao houver secrets configurados
-    # (ex.: antes da Parte 3), nao quebra: cai para o campo manual.
+    # (ex.: antes de configurar), nao quebra: cai para o campo manual.
     try:
-        chave_secrets = st.secrets.get("GOOGLE_API_KEY", "")
+        chave_secrets = st.secrets.get("GROQ_API_KEY", "")
     except Exception:  # noqa: BLE001
         chave_secrets = ""
-    api_key = chave_secrets or st.text_input("Chave da API do Google (Gemini)",
+    api_key = chave_secrets or st.text_input("Chave da API do Groq",
                                               type="password")
-    st.markdown("Crie uma chave gratuita no **Google AI Studio**.")
-    # Modelo editavel: se o Google aposentar o padrao, e so trocar aqui.
-    modelo = st.text_input("Modelo do Gemini", value=MODELO_LLM)
+    st.markdown("Crie uma chave gratuita em **console.groq.com** "
+                "(não pede cartão de crédito).")
+    # Modelo editavel: se o provedor aposentar o padrao, e so trocar aqui.
+    modelo = st.text_input("Modelo (Groq)", value=MODELO_LLM)
 
 
 # =========================================================================
@@ -107,8 +107,8 @@ if "tabelas" in st.session_state:
         st.chat_message("user").write(pergunta)
 
         # Monta o LLM e o agente sobre a LISTA de dataframes carregados.
-        llm = ChatGoogleGenerativeAI(model=modelo, temperature=0,
-                                     google_api_key=api_key)
+        llm = ChatGroq(model=modelo, temperature=0,
+                       groq_api_key=api_key)
         tabelas = st.session_state["tabelas"]
         contexto = du.montar_contexto(tabelas, st.session_state.get("dicionario", ""))
 
