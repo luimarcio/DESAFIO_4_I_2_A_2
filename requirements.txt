@@ -5,4 +5,4 @@ tabulate
 langchain
 langchain-experimental
 langchain-community
-langchain-google-genai
+langchain-groq
