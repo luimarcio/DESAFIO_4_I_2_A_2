@@ -124,16 +124,23 @@ def montar_contexto(tabelas: dict, dicionario_texto: str = "") -> str:
     onde procurar cada informacao.
     """
     linhas = [
-        "Voce e um analista de dados. Responda SEMPRE em portugues do Brasil.",
-        "Voce tem acesso aos dataframes do pandas listados abaixo.",
-        "Use-os para responder. Se um calculo for necessario, calcule com o codigo.",
-        "Quando fizer sentido, gere um grafico com matplotlib (plt).",
+        "Voce e um analista de dados especializado em pandas.",
+        "Responda SEMPRE em portugues do Brasil, com a resposta final em texto claro.",
         "",
-        "TABELAS DISPONIVEIS:",
+        "REGRAS IMPORTANTES (leia com atencao):",
+        "1. Os dataframes JA ESTAO CARREGADOS na memoria, nas variaveis df1, df2, etc.",
+        "2. NUNCA use pd.read_csv(). NUNCA tente abrir, ler ou importar arquivos do disco.",
+        "   Nao existe arquivo em disco: os dados ja estao prontos nas variaveis.",
+        "3. Para responder, escreva codigo pandas usando DIRETAMENTE df1, df2 na ferramenta.",
+        "4. Se precisar de grafico, use matplotlib (import matplotlib.pyplot as plt).",
+        "5. Nunca diga que nao tem acesso aos dados: voce tem, via df1, df2.",
+        "",
+        "TABELAS JA CARREGADAS NA MEMORIA:",
     ]
     for i, (nome, df) in enumerate(tabelas.items(), start=1):
-        linhas.append(f"- df{i} (arquivo '{nome}'): {df.shape[0]} linhas, "
-                      f"{df.shape[1]} colunas.")
+        linhas.append(f"- df{i} (originado do arquivo {nome}) — JA CARREGADO, "
+                      f"use a variavel df{i} diretamente. "
+                      f"{df.shape[0]} linhas, {df.shape[1]} colunas.")
         linhas.append(f"  Colunas: {', '.join(map(str, df.columns))}")
 
     if dicionario_texto.strip():
