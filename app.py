@@ -31,9 +31,10 @@ try:
 except Exception:  # noqa: BLE001
     from langchain.callbacks import StreamlitCallbackHandler
 
-# Modelo do Gemini. Se o nome sair do ar, troque por outro disponivel no
-# Google AI Studio (ex.: "gemini-2.0-flash", "gemini-1.5-flash").
-MODELO_LLM = "gemini-2.5-flash"
+# Modelo padrao do Gemini. Fica editavel na barra lateral do app, entao se o
+# Google aposentar este nome, basta digitar outro na tela (ex.: "gemini-3.7-flash")
+# sem alterar o codigo nem republicar.
+MODELO_LLM = "gemini-3.6-flash"
 
 st.set_page_config(page_title="Consulta de NFs com IA", page_icon="📄", layout="wide")
 st.title("📄 Consulta Inteligente de Notas Fiscais (CSV)")
@@ -52,6 +53,8 @@ with st.sidebar:
     api_key = chave_secrets or st.text_input("Chave da API do Google (Gemini)",
                                               type="password")
     st.markdown("Crie uma chave gratuita no **Google AI Studio**.")
+    # Modelo editavel: se o Google aposentar o padrao, e so trocar aqui.
+    modelo = st.text_input("Modelo do Gemini", value=MODELO_LLM)
 
 
 # =========================================================================
@@ -104,7 +107,7 @@ if "tabelas" in st.session_state:
         st.chat_message("user").write(pergunta)
 
         # Monta o LLM e o agente sobre a LISTA de dataframes carregados.
-        llm = ChatGoogleGenerativeAI(model=MODELO_LLM, temperature=0,
+        llm = ChatGoogleGenerativeAI(model=modelo, temperature=0,
                                      google_api_key=api_key)
         tabelas = st.session_state["tabelas"]
         contexto = du.montar_contexto(tabelas, st.session_state.get("dicionario", ""))
